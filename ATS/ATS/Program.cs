@@ -7,13 +7,19 @@ namespace ATS
     { 
         static void Main(string[] args)
         {
-
-            var listAbonents = DBFile<Abonent>.Read("Abonents");
-            var randomAbonentNum = new Random().Next(listAbonents.Count);         
-            Abonent yourAbonent = listAbonents[randomAbonentNum];
-            yourAbonent.Notify += ShowMessage;
-            Provider.Notify += ShowMessage;
-            StartWork(yourAbonent, randomAbonentNum, listAbonents);         
+            try
+            {
+                var listAbonents = DBFile<Abonent>.Read("Abonents");
+                var randomAbonentNum = new Random().Next(listAbonents.Count);
+                Abonent yourAbonent = listAbonents[randomAbonentNum];
+                yourAbonent.Notify += ShowMessage;
+                Provider.Notify += ShowMessage;
+                StartWork(yourAbonent, randomAbonentNum, listAbonents);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
         }
        static void ShowMessage(string message) => Console.WriteLine(message);
